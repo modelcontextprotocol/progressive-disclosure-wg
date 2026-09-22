@@ -1,0 +1,27 @@
+name: Deterministic grouping experiment
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  reference:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: node --test experiments/deterministic-groups/reference.test.mjs
+      - run: node --test experiments/deterministic-groups/benchmark.test.mjs
+      - run: node experiments/deterministic-groups/benchmark.mjs --check experiments/deterministic-groups/benchmark-results.json
+      - run: node --test experiments/deterministic-groups/conformance/suite.test.mjs
+      - run: node experiments/deterministic-groups/conformance/run.mjs
+      - run: npm ci
+        working-directory: sdk/typescript
+      - run: node --test sdk/typescript/experiments/grouping/transport.checks.mjs
+      - run: node --test sdk/typescript/experiments/grouping/host.checks.mjs

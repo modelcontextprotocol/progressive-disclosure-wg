@@ -1,0 +1,56 @@
+{
+  "groups": {
+    "query": "Inspect tables",
+    "operations": "Inspect cluster health"
+  },
+  "tools": [
+    {
+      "name": "list_tables",
+      "description": "Read list_tables",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true },
+      "_meta": {
+        "experimental/deterministic-groups": {
+          "groups": ["query"],
+          "callable": true
+        }
+      }
+    },
+    {
+      "name": "cluster_health",
+      "description": "Read cluster_health",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true },
+      "_meta": {
+        "experimental/deterministic-groups": {
+          "groups": ["operations"],
+          "callable": true
+        }
+      }
+    },
+    {
+      "name": "server_version",
+      "description": "Read server_version",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "annotations": { "readOnlyHint": true },
+      "_meta": {
+        "experimental/deterministic-groups": {
+          "groups": ["query", "operations"],
+          "callable": true
+        }
+      }
+    }
+  ]
+}

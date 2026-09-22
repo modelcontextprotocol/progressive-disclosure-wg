@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "status": "experimental-not-official-conformance",
+  "profiles": {
+    "server-core": [
+      "authorized-set",
+      "selective-expansion",
+      "shared-identity",
+      "describe-errors",
+      "hidden-groups",
+      "stale-membership",
+      "stale-schema",
+      "stale-authorization",
+      "unavailable-call",
+      "revoked-call",
+      "reconnect-view",
+      "legacy-list"
+    ],
+    "canonical-json-ascii": ["empty", "nested-order", "escaping", "numbers"]
+  },
+  "pending": [
+    {
+      "id": "pagination-race",
+      "gate": "SDK integration",
+      "reason": "Cursor and snapshot semantics are not defined by this grouping draft."
+    },
+    {
+      "id": "notification-delivery",
+      "gate": "SDK integration",
+      "reason": "SDK stdio delivery and Host-local eviction are tested after a fixture update and ping barrier; unsolicited changes and external provider eviction remain unverified."
+    },
+    {
+      "id": "ttl-expiry",
+      "gate": "SDK integration",
+      "reason": "No TTL scheduler is implemented."
+    },
+    {
+      "id": "unicode-order",
+      "gate": "cross-language",
+      "reason": "SEP code-point ordering and RFC 8785 UTF-16 ordering differ; awaiting alignment."
+    },
+    {
+      "id": "provider-activation",
+      "gate": "live host",
+      "reason": "No real model-provider API has been exercised."
+    },
+    {
+      "id": "second-implementation",
+      "gate": "interoperability",
+      "reason": "The bundled adapter wraps the original reference, not an independent implementation."
+    }
+  ]
+}

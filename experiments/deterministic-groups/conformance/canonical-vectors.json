@@ -1,0 +1,18 @@
+[
+  { "id": "empty", "input": {}, "canonical": "{}" },
+  {
+    "id": "nested-order",
+    "input": { "z": [{ "b": 2, "a": 1 }], "a": true },
+    "canonical": "{\"a\":true,\"z\":[{\"a\":1,\"b\":2}]}"
+  },
+  {
+    "id": "escaping",
+    "input": { "text": "line\n\t\"\\é" },
+    "canonical": "{\"text\":\"line\\n\\t\\\"\\\\é\"}"
+  },
+  {
+    "id": "numbers",
+    "input": { "c": 0.000001, "b": 1e21, "a": -0.0 },
+    "canonical": "{\"a\":0,\"b\":1e+21,\"c\":0.000001}"
+  }
+]
