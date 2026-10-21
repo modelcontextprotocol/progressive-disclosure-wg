@@ -1,0 +1,6 @@
+{
+  "name": "groups",
+  "version": "0.1.0",
+  "description": "Progressive disclosure of grouped tools inside Claude Code: list_groups + open_group reveal a group's scoped tools on demand, registered mid-session so a supported model receives them cache-safely (deferred/inline) instead of rewriting the tool-list prefix.",
+  "author": { "name": "groups-ext prototype" }
+}

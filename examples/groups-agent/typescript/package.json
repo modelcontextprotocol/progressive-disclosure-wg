@@ -1,0 +1,20 @@
+{
+  "name": "example-groups-agent",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "latest",
+    "@anthropic-ai/vertex-sdk": "latest",
+    "@modelcontextprotocol/ext-grouping": "file:../../../sdk/typescript",
+    "@modelcontextprotocol/sdk": "^1.27.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "typescript": "^5.0.0"
+  }
+}
