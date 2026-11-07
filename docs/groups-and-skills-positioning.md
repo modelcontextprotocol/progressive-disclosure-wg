@@ -83,7 +83,7 @@ tools/list  -> [all tools up front]
 
 // Option B: Groups server
 groups/list -> [{ name: "refunds", ... }]
-groups/get  -> { instructions, contents }
+groups/get  -> { instructions, tools, ... }
 
 // Specs evolve separately; no interop
 ```
@@ -129,13 +129,11 @@ to the tools that run it. No new field needed.
 ```
 // A Group lists the Skill as an ordinary resource, next to its primitives
 groups/get { name: "refunds" } -> {
-  contents: {
-    resources: [
-      { uri: "skill://refunds/SKILL.md", mimeType: "text/markdown" }
-    ],
-    tools: [lookup_order, issue_refund],
-    prompts: [refund_summary]
-  }
+  resources: [
+    { uri: "skill://refunds/SKILL.md", mimeType: "text/markdown" }
+  ],
+  tools: [lookup_order, issue_refund],
+  prompts: [refund_summary]
 }
 ```
 
@@ -315,13 +313,11 @@ so they become a plain group with no `instructions` and no skill.
 
 ```json
 {
-  "contents": {
-    "tools": [
-      { "name": "list_events",  "description": "List events in a date range.", "inputSchema": { … } },
-      { "name": "create_event", "description": "Create an event.",             "inputSchema": { … } },
-      { "name": "move_event",   "description": "Move an event to a new time.", "inputSchema": { … } }
-    ]
-  },
+  "tools": [
+    { "name": "list_events",  "description": "List events in a date range.", "inputSchema": { … } },
+    { "name": "create_event", "description": "Create an event.",             "inputSchema": { … } },
+    { "name": "move_event",   "description": "Move an event to a new time.", "inputSchema": { … } }
+  ],
   "ttlMs": 600000,
   "cacheScope": "private"
 }
@@ -368,20 +364,18 @@ description: Process customer refund requests per Acme policy
 ```json
 {
   "instructions": "Follow the refunds skill for procedure and policy. lookup_order is read-only; issue_refund moves money, so confirm the amount with the user first.",
-  "contents": {
-    "tools": [
-      { "name": "lookup_order", "description": "Fetch an order and its charges.", "inputSchema": { … } },
-      { "name": "issue_refund", "description": "Refund a charge on an order.",    "inputSchema": { … } }
-    ],
-    "resources": [
-      {
-        "uri": "skill://acme/billing/refunds/SKILL.md",
-        "name": "refunds",
-        "mimeType": "text/markdown",
-        "description": "Process customer refund requests per Acme policy"
-      }
-    ]
-  },
+  "tools": [
+    { "name": "lookup_order", "description": "Fetch an order and its charges.", "inputSchema": { … } },
+    { "name": "issue_refund", "description": "Refund a charge on an order.",    "inputSchema": { … } }
+  ],
+  "resources": [
+    {
+      "uri": "skill://acme/billing/refunds/SKILL.md",
+      "name": "refunds",
+      "mimeType": "text/markdown",
+      "description": "Process customer refund requests per Acme policy"
+    }
+  ],
   "ttlMs": 300000,
   "cacheScope": "private"
 }
@@ -440,7 +434,7 @@ For Option 2, both specs would need to agree on a few things:
    approve it.
 3. **Groups are a valid referrer.** The Skills extension lists three sources of
    skill references (server `instructions`, another skill, or the user). We'd add
-   a group's `contents.resources` as a fourth, confirmed with `skills/get`.
+   a group's `resources` as a fourth, confirmed with `skills/get`.
 4. **Reference by URI, not scheme.** The scheme doesn't identify a skill, and
    servers can use schemes other than `skill://`.
 5. **Only returned primitives are guaranteed.** Whatever `groups/get` returns is
