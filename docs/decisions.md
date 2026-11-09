@@ -19,15 +19,15 @@ Tracks decisions for the Progressive Disclosure WG
 
 ---
 
-### 2026-10-27: Operations are `group/get` and `group/list`, and they are stateless
+### 2026-10-27: Operations are `groups/get` and `groups/list`, and they are stateless
 
 **Status:** Accepted
 
 **Context:** The operation names were open, with `activate` and `load` proposed alongside `get`. The choice also had to signal whether fetching a group mutates server-side state.
 
-**Decision:** The two operations are `group/list` (enumerate the groups in the caller's view) and `group/get` (resolve a group by name). Both are read-only, stateless RPCs: `get`/`list` name a retrieval, not a state transition, and neither records a server-side "active" set. `activate` / `load` are rejected.
+**Decision:** The two operations are `groups/list` (enumerate the groups in the caller's view) and `groups/get` (resolve a group by name). Both are read-only, stateless RPCs: `get`/`list` name a retrieval, not a state transition, and neither records a server-side "active" set. `activate` / `load` are rejected.
 
-**Rationale:** `get`/`list` are the stateless read verbs already used across the protocol. `activate` / `load` would imply a transition the RPC does not perform. Statelessness keeps the operations honest — a client can call `group/get` freely with no server-side side effects.
+**Rationale:** `get`/`list` are the stateless read verbs already used across the protocol. `activate` / `load` would imply a transition the RPC does not perform. Statelessness keeps the operations honest — a client can call `groups/get` freely with no server-side side effects. The `groups/` namespace is plural to match the protocol's existing method namespaces (`tools/list`, `prompts/get`, `resources/read`).
 
 **References:**
 - [Progressive Disclosure discussion](https://github.com/modelcontextprotocol/modelcontextprotocol/discussions/3458)
@@ -55,7 +55,7 @@ Tracks decisions for the Progressive Disclosure WG
 
 **Context:** A group needs to express the "how" of a workflow without conflating it with the "when to use" signal, and clients should not have to make extra round-trips to learn what a group contains.
 
-**Decision:** A group MAY carry optional `instructions` — the "how"/workflow prose — kept distinct from `description`. A group's scoped primitives are delivered next to the group, inline in the same `group/get` response, rather than fetched separately.
+**Decision:** A group MAY carry optional `instructions` — the "how"/workflow prose — kept distinct from `description`. A group's scoped primitives are delivered next to the group, inline in the same `groups/get` response, rather than fetched separately.
 
 **Rationale:** Placing the primitives alongside the group keeps the shape flat and avoids introducing another nested structure for clients to traverse; the group stays self-contained in a single response. Keeping `instructions` optional lets a group be either a plain bundle of primitives or a richer workflow, without forcing prose where none is needed.
 
